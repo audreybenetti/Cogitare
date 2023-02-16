@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nomes">
+        <item>@string/joao</item>
+        <item>@string/maria</item>
+        <item>@string/suzana</item>
+        <item>@string/leonardo</item>
+        <item>@string/carolina</item>
+        <item>@string/eduarda</item>
+        <item>@string/marcos</item>
+        <item>@string/luiz</item>
+        <item>@string/fabio</item>
+        <item>@string/juliana</item>
+    </string-array>
+
+    <integer-array name="sexos">
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="prontuarios">
+        <item>1211</item>
+        <item>1213</item>
+        <item>1214</item>
+        <item>1215</item>
+        <item>1216</item>
+        <item>1217</item>
+        <item>1218</item>
+        <item>1219</item>
+        <item>1220</item>
+        <item>1221</item>
+    </integer-array>
+
+    <string-array name="unidades_internacao">
+        <item>@string/int_lactario</item>
+        <item>@string/int_intensivo</item>
+        <item>@string/int_emergencia</item>
+        <item>@string/int_obstetrico</item>
+        <item>@string/int_geral</item>
+        <item>@string/int_geral</item>
+        <item>@string/int_cirurgico</item>
+        <item>@string/int_pediatrica</item>
+        <item>@string/int_geral</item>
+        <item>@string/int_obstetrico</item>
+    </string-array>
+
+
+    <string-array name="array_unidades_internacao">
+        <item> </item>
+        <item>@string/int_geral</item>
+        <item>@string/int_pediatrica</item>
+        <item>@string/int_transmissiveis</item>
+        <item>@string/int_mentais</item>
+        <item>@string/int_tuberculose</item>
+        <item>@string/int_bercario</item>
+        <item>@string/int_intensivo</item>
+        <item>@string/int_emergencia</item>
+        <item>@string/int_cirurgico</item>
+        <item>@string/int_obstetrico</item>
+        <item>@string/int_lactario</item>
+    </string-array>
+</resources>
