@@ -9,10 +9,10 @@
     <string name="numero_prontuario">Número do prontuário:</string>
     <string name="unidade_internacao">Unidade de internação:</string>
     <string name="title_unidade_internacao">Selecione a unidade de internação</string>
-    <string name="cadastrar_paciente">CADASTRAR</string>
+    <string name="cadastrar">CADASTRAR</string>
     <string name="sexo_masculino">Masculino</string>
     <string name="sexo_feminino">Feminino</string>
-    <string name="limpar_campos">LIMPAR</string>
+    <string name="limpar_campos">LIMPAR CAMPOS</string>
     <string name="toast_limpar_campos">Campos limpos com sucesso!</string>
     <string name="toast_erro_cadastro">Verifique o preenchimento dos campos.</string>
     <string name="termos_privacidade">Ao cadastrar paciente, você deve concordar com os termos de privacidade.</string>
@@ -28,23 +28,6 @@
     <string name="int_cirurgico">Centro Cirúrgico</string>
     <string name="int_obstetrico">Centro Obstétrico</string>
     <string name="int_lactario">Lactário</string>
-
-    <string name="joao">João da Silva Campos</string>
-    <string name="maria">Maria Albuquerque</string>
-    <string name="suzana">Suzana Fernandes da Souza</string>
-    <string name="leonardo">Leonardo Moraes</string>
-    <string name="carolina">Carolina Soares</string>
-    <string name="eduarda">Eduarda Almeida</string>
-    <string name="marcos">Marcos de Oliveira</string>
-    <string name="luiz">Luiz Gomes</string>
-    <string name="fabio">Fabio Dias</string>
-    <string name="juliana">Juliana Cardoso</string>
-    <string name="nome_nao_informado">Nome não informado.</string>
-    <string name="sexo_nao_informado">Sexo não informado.</string>
-    <string name="prontuario_nao_informado">Prontuário não informado.</string>
-    <string name="nascimento_nao_informado">Data de nascimento não informada.</string>
-    <string name="unidade_nao_informada">Unidade de internação não informada.</string>
-    <string name="paciente_cadastrado">Paciente cadastrado:</string>
-    <string name="salvar">SALVAR</string>
+    <string name="sobre">SOBRE</string>
 
 </resources>

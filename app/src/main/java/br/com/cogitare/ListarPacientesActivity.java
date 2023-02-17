@@ -2,8 +2,8 @@ package br.com.cogitare;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -14,11 +14,13 @@ public class ListarPacientesActivity extends AppCompatActivity {
 
     private ListView listViewPacientes;
     private ArrayList<Paciente> pacientes;
+    private PacienteAdapter pacienteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_pacientes);
+        setTitle("Pacientes cadastrados");
 
         listViewPacientes = findViewById(R.id.listViewPacientes);
 
@@ -36,30 +38,44 @@ public class ListarPacientesActivity extends AppCompatActivity {
     }
 
     public void cadastrarPaciente(View view) {
-        Intent intent = new Intent(this, CadastrarPacienteActivity.class);
-        startActivity(intent);
+        CadastrarPacienteActivity.novoPaciente(this);
     }
 
     public void mostrarAutoria(View view){
-        Intent intent = new Intent(this, AutoriaActivity.class);
-        startActivity(intent);
+        AutoriaActivity.mostrarAutoria(this);
     }
 
     private void popularLista() {
-        String [] nomes = getResources().getStringArray(R.array.nomes);
-        int [] sexo = getResources().getIntArray(R.array.sexos);
-        int [] numerosProntuario = getResources().getIntArray(R.array.prontuarios);
-        String [] unidadesInternacao = getResources().getStringArray(R.array.unidades_internacao);
-
         pacientes = new ArrayList<>();
-        GeneroEnum [] generoEnum = GeneroEnum.values();
-        for(int i = 0; i < nomes.length; i++){
-            Paciente paciente = new Paciente(nomes[i], numerosProntuario[i], unidadesInternacao[i]);
-            paciente.setSexo(generoEnum[sexo[i]]);
-            pacientes.add(paciente);
-        }
-
-        PacienteAdapter pacienteAdapter = new PacienteAdapter(this, pacientes);
+        pacienteAdapter = new PacienteAdapter(this, pacientes);
         listViewPacientes.setAdapter(pacienteAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode,
+                                    int resultCode,
+                                    Intent intent) {
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            Bundle bundle = intent.getExtras();
+            String nome = bundle.getString(CadastrarPacienteActivity.KEY_NOME);
+            String sexo = bundle.getString(CadastrarPacienteActivity.KEY_GENERO);
+            String prontuario = bundle.getString(CadastrarPacienteActivity.KEY_PRONTUARIO);
+            String data = bundle.getString(CadastrarPacienteActivity.KEY_DATA);
+            String unidade = bundle.getString(CadastrarPacienteActivity.KEY_UNIDADE);
+
+            Paciente paciente = new Paciente(nome, Integer.parseInt(prontuario), unidade);
+            paciente.setSexo(sexo.equals(String.valueOf(R.id.buttonMasculino)) ? GeneroEnum.MASCULINO : GeneroEnum.FEMININO);
+            pacientes.add(paciente);
+
+            pacienteAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 }

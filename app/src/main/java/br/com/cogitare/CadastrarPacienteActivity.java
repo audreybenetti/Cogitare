@@ -27,15 +27,23 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
     private CheckBox editTermos;
     private Spinner editUnidade;
     private DatePickerDialog.OnDateSetListener dateSetListener;
-    private static final Integer MOSTRAR_DADOS_PACIENTE = 1;
+
+    public static final String KEY_NOME = "NOME";
+    public static final String KEY_GENERO = "GENERO";
+    public static final String KEY_DATA = "DATA";
+    public static final String KEY_UNIDADE = "UNIDADE";
+    public static final String KEY_PRONTUARIO = "PRONTUARIO";
+    public static final String MODO    = "MODO";
+    public static final int    NOVO    = 1;
+    public static final int    ALTERAR = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_paciente);
+        setTitle("Cadastro de pacientes");
 
         radioGroupGeneros = findViewById(R.id.groupGeneros);
-
         editNome = findViewById(R.id.edit_nome);
         editProntuario = findViewById(R.id.edit_prontuario);
         editUnidade = findViewById(R.id.edit_unidade_internacao);
@@ -43,6 +51,12 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
 
         editData = findViewById(R.id.edit_data);
         displayDatePicker();
+    }
+
+    public static void novoPaciente(AppCompatActivity activity) {
+        Intent intent = new Intent(activity, CadastrarPacienteActivity.class);
+        intent.putExtra(MODO, NOVO);
+        activity.startActivityForResult(intent, NOVO);
     }
 
     private void displayDatePicker(){
@@ -99,16 +113,21 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
     }
 
     public void cadastrarPaciente() {
-        Intent intent = new Intent(this,
-                ListarPacientesActivity.class);
+        String nome = editNome.getText().toString();
+        String genero = String.valueOf(radioGroupGeneros.getCheckedRadioButtonId());
+        String data = editData.getText().toString();
+        String prontuario = editProntuario.getText().toString();
+        String unidade = editUnidade.getSelectedItem().toString();
 
-        intent.putExtra(MostrarDadosPacienteActivity.KEY_NOME, editNome.getText().toString());
-        intent.putExtra(MostrarDadosPacienteActivity.KEY_GENERO, radioGroupGeneros.getCheckedRadioButtonId());
-        intent.putExtra(MostrarDadosPacienteActivity.KEY_DATA, editData.getText().toString());
-        intent.putExtra(MostrarDadosPacienteActivity.KEY_PRONTUARIO, editProntuario.getText().toString());
-        intent.putExtra(MostrarDadosPacienteActivity.KEY_UNIDADE, editUnidade.getSelectedItem().toString());
+        Intent intent = new Intent();
+        intent.putExtra(KEY_NOME, nome);
+        intent.putExtra(KEY_GENERO, genero);
+        intent.putExtra(KEY_DATA, data);
+        intent.putExtra(KEY_PRONTUARIO, prontuario);
+        intent.putExtra(KEY_UNIDADE, unidade);
 
-        startActivityForResult(intent, MOSTRAR_DADOS_PACIENTE);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     private boolean isCamposPreenchidos(){
