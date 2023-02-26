@@ -112,10 +112,9 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         String[] unidades = getResources().getStringArray(R.array.array_unidades_internacao);
         int i = 0;
         for (String u : unidades) {
-            i++;
             if (u.equals(unidade)) {
                 return i;
-            }
+            } else i++;
         }
         return 0;
     }
