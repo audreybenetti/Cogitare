@@ -226,6 +226,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public void onBackPressed() {
         setResult(Activity.RESULT_CANCELED);
