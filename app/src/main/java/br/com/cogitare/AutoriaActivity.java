@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 public class AutoriaActivity extends AppCompatActivity {
 
@@ -20,6 +21,15 @@ public class AutoriaActivity extends AppCompatActivity {
     public static void mostrarAutoria(AppCompatActivity activity) {
         Intent intent = new Intent(activity, AutoriaActivity.class);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void configuraBottomUp() {

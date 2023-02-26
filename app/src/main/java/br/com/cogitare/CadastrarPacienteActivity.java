@@ -82,6 +82,9 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
             case R.id.menuItemLimparCampos:
                 limparCampos();
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
