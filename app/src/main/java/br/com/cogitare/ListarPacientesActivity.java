@@ -77,7 +77,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_pacientes);
-        setTitle("Pacientes cadastrados");
+        setTitle(getString(R.string.titulo_lista_pacientes));
         listViewPacientes = findViewById(R.id.listViewPacientes);
 
         listViewPacientes.setOnItemLongClickListener(

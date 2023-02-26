@@ -13,7 +13,7 @@ public class AutoriaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autoria);
-        setTitle("Autoria do aplicativo");
+        setTitle(getString(R.string.titulo_autoria));
 
         configuraBottomUp();
     }
