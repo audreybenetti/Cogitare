@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -19,7 +20,10 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CadastrarPacienteActivity extends AppCompatActivity {
 
@@ -52,7 +56,15 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         editData = findViewById(R.id.edit_data);
         displayDatePicker();
 
+        configuraBottomUp();
         defineTituloPagina();
+    }
+
+    private void configuraBottomUp() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -81,14 +93,28 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         if (bundle != null) {
             int modo = bundle.getInt(MODO, NOVO_PACIENTE);
             if (modo == NOVO_PACIENTE) {
-                setTitle("Cadastro de pacientes");
+                setTitle(getString(R.string.titulo_cadastro));
             } else {
                 editNome.setText(bundle.getString(KEY_NOME));
+                radioGroupGeneros.check(bundle.getInt((KEY_GENERO)) == 2131296308 ? R.id.buttonMasculino : R.id.buttonFeminino);
                 editData.setText(bundle.getString(KEY_DATA));
                 editProntuario.setText(bundle.getString(KEY_PRONTUARIO));
-                setTitle("Alteração de cadastro");
+                editUnidade.setSelection(selecionarUnidade(bundle.getString(KEY_UNIDADE)));
+                setTitle(getString(R.string.titulo_alteracao));
             }
         }
+    }
+
+    private Integer selecionarUnidade(String unidade) {
+        String[] unidades = getResources().getStringArray(R.array.array_unidades_internacao);
+        int i = 0;
+        for (String u : unidades) {
+            i++;
+            if (u.equals(unidade)) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     public static void novoPaciente(AppCompatActivity activity) {
@@ -127,7 +153,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         });
         dateSetListener = (datePicker, year, month, day) -> {
         month = month + 1;
-        String data = year + "/" + month + "/" + day;
+        String data = String.format(Locale.getDefault(),"%04d/%02d/%02d", year, month, day);
         editData.setText(data);
         };
     }

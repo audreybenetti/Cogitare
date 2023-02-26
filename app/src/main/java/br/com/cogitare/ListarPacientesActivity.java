@@ -2,7 +2,9 @@ package br.com.cogitare;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
@@ -144,15 +146,21 @@ public class ListarPacientesActivity extends AppCompatActivity {
     }
 
     private LocalDate toLocalDate(String data) {
-        DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy/M/d");
-        return LocalDate.from(LocalDate.parse(data, parser));
+        DateTimeFormatter parser = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            parser = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return LocalDate.from(LocalDate.parse(data, parser));
+        }
+        return null;
     }
 
     private void alterarPaciente(String nome, String sexo, String data, String prontuario, String unidade) {
         Paciente paciente = listaPacientes.get(pacienteSelecionado);
         paciente.setNome(nome);
         paciente.setSexo(getGeneroEnum(sexo));
-        paciente.setDataNascimento(toLocalDate(data));
+        paciente.setDataNascimento(paciente.getDataNascimento().toString().equals(data) ? paciente.getDataNascimento() : toLocalDate(data));
         paciente.setNumeroProntuario(Integer.valueOf(prontuario));
         paciente.setUnidadeInternacao(unidade);
     }

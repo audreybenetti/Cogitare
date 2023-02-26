@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string-array name="unidades_internacao">
-        <item>@string/int_lactario</item>
-        <item>@string/int_intensivo</item>
-        <item>@string/int_emergencia</item>
-        <item>@string/int_obstetrico</item>
-        <item>@string/int_geral</item>
-        <item>@string/int_geral</item>
-        <item>@string/int_cirurgico</item>
-        <item>@string/int_pediatrica</item>
-        <item>@string/int_geral</item>
-        <item>@string/int_obstetrico</item>
-    </string-array>
-
-
     <string-array name="array_unidades_internacao">
         <item> </item>
         <item>@string/int_geral</item>

@@ -31,5 +31,7 @@
     <string name="sobre">Sobre</string>
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
+    <string name="titulo_cadastro">Cadastro de pacientes</string>
+    <string name="titulo_alteracao">Alteração de cadastro</string>
 
 </resources>
