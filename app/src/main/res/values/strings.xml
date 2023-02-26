@@ -9,14 +9,14 @@
     <string name="numero_prontuario">Número do prontuário:</string>
     <string name="unidade_internacao">Unidade de internação:</string>
     <string name="title_unidade_internacao">Selecione a unidade de internação</string>
-    <string name="cadastrar">CADASTRAR</string>
+    <string name="cadastrar">Salvar</string>
+    <string name="adicionar">Adicionar</string>
     <string name="sexo_masculino">Masculino</string>
     <string name="sexo_feminino">Feminino</string>
-    <string name="limpar_campos">LIMPAR CAMPOS</string>
+    <string name="limpar_campos">Limpar campos</string>
     <string name="toast_limpar_campos">Campos limpos com sucesso!</string>
     <string name="toast_erro_cadastro">Verifique o preenchimento dos campos.</string>
     <string name="termos_privacidade">Ao cadastrar paciente, você deve concordar com os termos de privacidade.</string>
-    <string name="toast_paciente_cadastrado">Paciente cadastrado com sucesso!</string>
     <string name="int_geral">Internação Geral</string>
     <string name="int_pediatrica">Internação Pediátrica</string>
     <string name="int_transmissiveis">Internação Para Doenças Transmissíveis</string>
@@ -28,6 +28,8 @@
     <string name="int_cirurgico">Centro Cirúrgico</string>
     <string name="int_obstetrico">Centro Obstétrico</string>
     <string name="int_lactario">Lactário</string>
-    <string name="sobre">SOBRE</string>
+    <string name="sobre">Sobre</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
 
 </resources>

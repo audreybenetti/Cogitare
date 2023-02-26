@@ -4,50 +4,118 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.support.v7.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ListarPacientesActivity extends AppCompatActivity {
 
     private ListView listViewPacientes;
-    private ArrayList<Paciente> pacientes;
+    private ArrayList<Paciente> listaPacientes;
     private PacienteAdapter pacienteAdapter;
+
+    private ActionMode actionMode;
+    private int pacienteSelecionado = -1;
+
+    private final ActionMode.Callback mActionCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflate = mode.getMenuInflater();
+            inflate.inflate(R.menu.listar_pacientes_item_selecionado, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch(item.getItemId()){
+                case R.id.menuItemEditar:
+                    editarPaciente();
+                    mode.finish();
+                    return true;
+                case R.id.menuItemExcluir:
+                    excluirPaciente();
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            actionMode = null;
+            listViewPacientes.setEnabled(true);
+        }
+    };
+
+    private void excluirPaciente(){
+        listaPacientes.remove(pacienteSelecionado);
+        pacienteAdapter.notifyDataSetChanged();
+    }
+
+    private void editarPaciente(){
+        CadastrarPacienteActivity.editarPaciente(this, listaPacientes.get(pacienteSelecionado));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_pacientes);
         setTitle("Pacientes cadastrados");
-
         listViewPacientes = findViewById(R.id.listViewPacientes);
 
-        listViewPacientes.setOnItemClickListener(
-                (adapterView, view, position, id) -> {
-                    Paciente paciente = (Paciente) listViewPacientes.getItemAtPosition(position);
-
-                    Toast.makeText(getApplicationContext(),
-                            "Paciente de nome " + paciente.getNome() + " foi clicado!",
-                            Toast.LENGTH_SHORT).show();
-                }
-        );
+        listViewPacientes.setOnItemLongClickListener(
+                (parent, view, position, id) -> {
+                    if (actionMode != null){
+                        return false;
+                    }
+                    pacienteSelecionado = position;
+                    listViewPacientes.setEnabled(false);
+                    actionMode = startSupportActionMode(mActionCallback);
+                    return true;
+                });
 
         popularLista();
     }
 
-    public void cadastrarPaciente(View view) {
-        CadastrarPacienteActivity.novoPaciente(this);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.listar_pacientes_opcoes, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    public void mostrarAutoria(View view){
-        AutoriaActivity.mostrarAutoria(this);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuItemAdicionar:
+                CadastrarPacienteActivity.novoPaciente(this);
+                return true;
+            case R.id.menuItemSobre:
+                AutoriaActivity.mostrarAutoria(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
 
     private void popularLista() {
-        pacientes = new ArrayList<>();
-        pacienteAdapter = new PacienteAdapter(this, pacientes);
+        listaPacientes = new ArrayList<>();
+        pacienteAdapter = new PacienteAdapter(this, listaPacientes);
         listViewPacientes.setAdapter(pacienteAdapter);
     }
 
@@ -59,23 +127,44 @@ public class ListarPacientesActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
 
             Bundle bundle = intent.getExtras();
+
             String nome = bundle.getString(CadastrarPacienteActivity.KEY_NOME);
             String sexo = bundle.getString(CadastrarPacienteActivity.KEY_GENERO);
             String prontuario = bundle.getString(CadastrarPacienteActivity.KEY_PRONTUARIO);
             String data = bundle.getString(CadastrarPacienteActivity.KEY_DATA);
             String unidade = bundle.getString(CadastrarPacienteActivity.KEY_UNIDADE);
 
-            Paciente paciente = new Paciente(nome, Integer.parseInt(prontuario), unidade);
-            paciente.setSexo(sexo.equals(String.valueOf(R.id.buttonMasculino)) ? GeneroEnum.MASCULINO : GeneroEnum.FEMININO);
-            pacientes.add(paciente);
-
+            if (requestCode == CadastrarPacienteActivity.ALTERAR_PACIENTE) {
+                alterarPaciente(nome, sexo, data, prontuario, unidade);
+            } else {
+                criarPaciente(nome, sexo, data, prontuario, unidade);
+            }
             pacienteAdapter.notifyDataSetChanged();
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        setResult(Activity.RESULT_CANCELED);
-        finish();
+    private LocalDate toLocalDate(String data) {
+        DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy/M/d");
+        return LocalDate.from(LocalDate.parse(data, parser));
+    }
+
+    private void alterarPaciente(String nome, String sexo, String data, String prontuario, String unidade) {
+        Paciente paciente = listaPacientes.get(pacienteSelecionado);
+        paciente.setNome(nome);
+        paciente.setSexo(getGeneroEnum(sexo));
+        paciente.setDataNascimento(toLocalDate(data));
+        paciente.setNumeroProntuario(Integer.valueOf(prontuario));
+        paciente.setUnidadeInternacao(unidade);
+    }
+
+    private void criarPaciente(String nome, String sexo, String data, String prontuario, String unidade) {
+        Paciente paciente = new Paciente(nome, Integer.parseInt(prontuario), unidade);
+        paciente.setDataNascimento(toLocalDate(data));
+        paciente.setSexo(getGeneroEnum(sexo));
+        listaPacientes.add(paciente);
+    }
+
+    private GeneroEnum getGeneroEnum(String sexo) {
+        return sexo.equals(String.valueOf(R.id.buttonMasculino)) ? GeneroEnum.MASCULINO : GeneroEnum.FEMININO;
     }
 }
