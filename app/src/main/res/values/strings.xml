@@ -38,5 +38,9 @@
     <string name="texto_descricao_aplicativo">Auxiliary tool for Post Anesthesia Recovery (PAR) procedures by nursing professionals.</string>
     <string name="descricao_app">Application description.</string>
     <string name="especializacao_java">Java Specialization</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="settings">Settings</string>
+    <string name="enable_dark_mode">Enable dark mode:</string>
+    <string name="appearance">Appearance</string>
 
 </resources>

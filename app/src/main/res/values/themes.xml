@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Cogitare" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    <style name="CogitareLight" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
@@ -13,7 +12,22 @@
         <item name="background">@drawable/gradiente_cogitare</item>
     </style>
 
-    <style name="Theme.Cogitare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <!-- Screen background if light mode on -->
+    <style name="SCREEN">
+        <item name="android:background">#FFFFFF</item>
+    </style>
 
+    <!-- Text color if light mode on -->
+    <style name="TEXT">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- Button color if light mode on -->
+    <style name="BUTTON">
+        <item name="android:background">#035FA5</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="Theme.Cogitare.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.Cogitare.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

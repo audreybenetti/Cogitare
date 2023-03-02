@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Cogitare" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="CogitareDark" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
@@ -11,5 +11,21 @@
         <item name="android:background">@drawable/gradiente_cogitare</item>
         <!-- Support library compatibility -->
         <item name="background">@drawable/gradiente_cogitare</item>
+    </style>
+
+    <!-- Screen background if dark mode on -->
+    <style name="SCREEN">
+        <item name="android:background">#232323</item>
+    </style>
+
+    <!-- Text color if dark mode on -->
+    <style name="TEXT">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- Button color if dak mode on -->
+    <style name="BUTTON">
+        <item name="android:background">#000000</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

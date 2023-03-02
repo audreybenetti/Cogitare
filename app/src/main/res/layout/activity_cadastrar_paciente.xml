@@ -5,6 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/SCREEN"
     tools:context=".CadastrarPacienteActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -27,6 +28,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:text="@string/nome_completo"
+        style="@style/TEXT"
         app:layout_constraintBottom_toTopOf="@+id/edit_nome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
@@ -43,6 +45,8 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textCapWords|textCapSentences"
+        style="@style/TEXT"
+
         app:layout_constraintBottom_toTopOf="@+id/view_sexo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +61,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/sexo_paciente"
+        style="@style/TEXT"
         app:layout_constraintBottom_toTopOf="@+id/groupGeneros"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_nome" />
@@ -69,6 +74,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/data_de_nascimento"
+        style="@style/TEXT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/groupGeneros" />
 
@@ -81,6 +87,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/numero_prontuario"
+        style="@style/TEXT"
         app:layout_constraintBottom_toTopOf="@+id/edit_prontuario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_data" />
@@ -95,6 +102,7 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:inputType="number"
+        style="@style/TEXT"
         app:layout_constraintBottom_toTopOf="@+id/view_unidade_internacao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -109,6 +117,7 @@
         android:layout_marginTop="8dp"
         android:prompt="@string/title_unidade_internacao"
         android:text="@string/unidade_internacao"
+        style="@style/TEXT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_prontuario" />
 
@@ -144,13 +153,15 @@
             android:id="@+id/buttonMasculino"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sexo_masculino" />
+            android:text="@string/sexo_masculino"
+            style="@style/TEXT"/>
 
         <RadioButton
             android:id="@+id/buttonFeminino"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sexo_feminino" />
+            android:text="@string/sexo_feminino"
+            style="@style/TEXT"/>
     </RadioGroup>
 
     <EditText
@@ -179,6 +190,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:text="@string/termos_privacidade"
+        style="@style/TEXT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_unidade_internacao" />

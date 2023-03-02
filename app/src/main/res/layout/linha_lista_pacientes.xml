@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    style="@style/SCREEN">
 
         <TextView
             android:id="@+id/textViewNome"
@@ -13,6 +14,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/nome_completo"
+            style="@style/TEXT"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -25,6 +27,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            style="@style/TEXT"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textViewNome"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -37,6 +40,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/sexo_paciente"
+            style="@style/TEXT"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewNome"/>
 
@@ -47,6 +51,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            style="@style/TEXT"
             app:layout_constraintStart_toEndOf="@+id/textViewSexo"
             app:layout_constraintTop_toBottomOf="@+id/textViewValorNome"/>
 
@@ -58,6 +63,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/numero_prontuario"
+            style="@style/TEXT"
             app:layout_constraintStart_toEndOf="@+id/textViewValorGenero"
             app:layout_constraintTop_toBottomOf="@+id/textViewValorNome"/>
 
@@ -70,6 +76,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            style="@style/TEXT"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textViewProntuario"
             app:layout_constraintTop_toBottomOf="@+id/textViewValorNome"/>
@@ -81,6 +88,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            style="@style/TEXT"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSexo"/>
 

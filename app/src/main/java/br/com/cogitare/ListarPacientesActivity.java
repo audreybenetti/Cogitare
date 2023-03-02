@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
@@ -13,10 +12,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ListarPacientesActivity extends AppCompatActivity {
 
@@ -80,6 +77,11 @@ public class ListarPacientesActivity extends AppCompatActivity {
         setTitle(getString(R.string.titulo_lista_pacientes));
         listViewPacientes = findViewById(R.id.listViewPacientes);
 
+        popularLista();
+        selecionaPaciente();
+    }
+
+    private void selecionaPaciente() {
         listViewPacientes.setOnItemLongClickListener(
                 (parent, view, position, id) -> {
                     if (actionMode != null){
@@ -90,8 +92,6 @@ public class ListarPacientesActivity extends AppCompatActivity {
                     actionMode = startSupportActionMode(mActionCallback);
                     return true;
                 });
-
-        popularLista();
     }
 
     @Override
@@ -109,6 +109,8 @@ public class ListarPacientesActivity extends AppCompatActivity {
             case R.id.menuItemSobre:
                 AutoriaActivity.mostrarAutoria(this);
                 return true;
+            case R.id.menuItemConfiguracoes:
+                ConfiguracoesActivity.mostrarConfiguracoes(this);
             default:
                 return super.onOptionsItemSelected(item);
         }
