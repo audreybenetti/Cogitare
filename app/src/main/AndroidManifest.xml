@@ -15,22 +15,16 @@
             android:name=".ConfiguracoesActivity"
             android:exported="false" />
         <activity
+            android:name=".CadastrarPacienteActivity"
+            android:exported="false"
+            android:parentActivityName=".ListarPacientesActivity"/>
+        <activity
             android:name=".AutoriaActivity"
             android:exported="false"
             android:parentActivityName=".ListarPacientesActivity" />
         <activity
             android:name=".ListarPacientesActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".CadastrarPacienteActivity"
-            android:exported="true"
-            android:parentActivityName=".ListarPacientesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

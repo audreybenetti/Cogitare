@@ -2,9 +2,11 @@ package br.com.cogitare;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +25,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
 
     private ActionMode actionMode;
     private int pacienteSelecionado = -1;
+    private boolean modoNoturnoDestaActivity;
 
     private final ActionMode.Callback mActionCallback = new ActionMode.Callback() {
 
@@ -72,6 +75,13 @@ public class ListarPacientesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MODE", MODE_PRIVATE);
+        modoNoturnoDestaActivity = sharedPreferences.getBoolean("DarkMode", true);
+        if(modoNoturnoDestaActivity) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_pacientes);
         setTitle(getString(R.string.titulo_lista_pacientes));
@@ -79,6 +89,22 @@ public class ListarPacientesActivity extends AppCompatActivity {
 
         popularLista();
         selecionaPaciente();
+    }
+
+    @Override
+    protected void onResume() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MODE", MODE_PRIVATE);
+        boolean modoSalvo = sharedPreferences.getBoolean("DarkMode", true);
+
+        if (modoNoturnoDestaActivity != modoSalvo){
+            if(modoSalvo){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            recreate();
+        }
+        super.onResume();
     }
 
     private void selecionaPaciente() {
@@ -129,7 +155,6 @@ public class ListarPacientesActivity extends AppCompatActivity {
                                     Intent intent) {
 
         if (resultCode == Activity.RESULT_OK) {
-
             Bundle bundle = intent.getExtras();
 
             String nome = bundle.getString(CadastrarPacienteActivity.KEY_NOME);
@@ -140,7 +165,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
 
             if (requestCode == CadastrarPacienteActivity.ALTERAR_PACIENTE) {
                 alterarPaciente(nome, sexo, data, prontuario, unidade);
-            } else {
+            } else if (requestCode == CadastrarPacienteActivity.NOVO_PACIENTE){
                 criarPaciente(nome, sexo, data, prontuario, unidade);
             }
             pacienteAdapter.notifyDataSetChanged();

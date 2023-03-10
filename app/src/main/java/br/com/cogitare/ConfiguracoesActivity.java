@@ -1,6 +1,5 @@
 package br.com.cogitare;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,8 +9,6 @@ import android.support.v7.widget.SwitchCompat;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 
-    private SwitchCompat darkModeSwitch;
-    private boolean enableDarkMode;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -26,7 +23,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_configuracoes);
         setTitle("Settings");
 
-        darkModeSwitch = findViewById(R.id.switchModoNoturno);
+        SwitchCompat darkModeSwitch = findViewById(R.id.switchModoNoturno);
 
         if(loadDarkMode()){
             darkModeSwitch.setChecked(true);
@@ -40,7 +37,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 setDarkMode(false);
             }
-            restart();
+            recreate();
         });
 
         loadDarkMode();
@@ -59,11 +56,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     public static void mostrarConfiguracoes(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ConfiguracoesActivity.class);
         activity.startActivity(intent);
-    }
-
-    private void restart(){
-        finish();
-        startActivity(getIntent());
     }
 
 }
