@@ -20,10 +20,14 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
+
+import br.com.cogitare.model.Paciente;
+import br.com.cogitare.persistence.PacientesDatabase;
+import br.com.cogitare.model.GeneroEnum;
 
 public class CadastrarPacienteActivity extends AppCompatActivity {
 
@@ -33,13 +37,10 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
     private CheckBox editTermos;
     private Spinner editUnidade;
     private DatePickerDialog.OnDateSetListener dateSetListener;
-
-    public static final String KEY_NOME = "NOME";
-    public static final String KEY_GENERO = "GENERO";
-    public static final String KEY_DATA = "DATA";
-    public static final String KEY_UNIDADE = "UNIDADE";
-    public static final String KEY_PRONTUARIO = "PRONTUARIO";
-    public static final String MODO    = "MODO";
+    private Paciente paciente;
+    private int    modo;
+    private static final String MODO = "MODO";
+    public static final String ID      = "ID";
     public static final int NOVO_PACIENTE = 1;
     public static final int ALTERAR_PACIENTE = 2;
 
@@ -54,17 +55,23 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         editUnidade = findViewById(R.id.edit_unidade_internacao);
         editTermos = findViewById(R.id.check_termos);
         editData = findViewById(R.id.edit_data);
-        displayDatePicker();
 
+        displayDatePicker();
         configuraBottomUp();
-        defineTituloPagina();
+        definePagina();
     }
 
-    private void configuraBottomUp() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+    public static void novoPaciente(AppCompatActivity activity) {
+        Intent intent = new Intent(activity, CadastrarPacienteActivity.class);
+        intent.putExtra(MODO, NOVO_PACIENTE);
+        activity.startActivityForResult(intent, NOVO_PACIENTE);
+    }
+
+    public static void editarPaciente(AppCompatActivity activity, Paciente paciente) {
+        Intent intent = new Intent(activity, CadastrarPacienteActivity.class);
+        intent.putExtra(MODO, ALTERAR_PACIENTE);
+        intent.putExtra(ID, paciente.getId());
+        activity.startActivityForResult(intent, ALTERAR_PACIENTE);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuItemCadastrar:
-                salvarPaciente();
+                verificaDados();
                 return true;
             case R.id.menuItemLimparCampos:
                 limparCampos();
@@ -90,7 +97,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         }
     }
 
-    private void defineTituloPagina() {
+    private void definePagina() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
@@ -98,14 +105,52 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
             if (modo == NOVO_PACIENTE) {
                 setTitle(getString(R.string.titulo_cadastro));
             } else {
-                editNome.setText(bundle.getString(KEY_NOME));
-                radioGroupGeneros.check(bundle.getInt((KEY_GENERO)) == 2131296308 ? R.id.buttonMasculino : R.id.buttonFeminino);
-                editData.setText(bundle.getString(KEY_DATA));
-                editProntuario.setText(bundle.getString(KEY_PRONTUARIO));
-                editUnidade.setSelection(selecionarUnidade(bundle.getString(KEY_UNIDADE)));
                 setTitle(getString(R.string.titulo_alteracao));
+                insereDadosPaciente(bundle.getInt(ID));
             }
         }
+    }
+
+    private void insereDadosPaciente(Integer id) {
+        PacientesDatabase database = PacientesDatabase.getDatabase(this);
+        paciente = database.pacienteDao().findById(id);
+
+        editNome.setText(paciente.getNome());
+        editProntuario.setText(paciente.getNumeroProntuario().toString());
+        editData.setText(paciente.getDataNascimento().toString());
+        radioGroupGeneros.check(paciente.getSexo() == GeneroEnum.MASCULINO ? R.id.buttonMasculino : R.id.buttonFeminino);
+        editUnidade.setSelection(selecionarUnidade(paciente.getUnidadeInternacao()));
+    }
+
+    public void verificaDados() {
+        if(isCamposPreenchidos() && isBotoesSelecionados()){
+            salvarPaciente();
+        } else {
+            Toast.makeText(this,
+                    R.string.toast_erro_cadastro,
+                    Toast.LENGTH_SHORT).show();
+            editUnidade.requestFocus();
+        }
+    }
+
+    public void salvarPaciente() {
+        String nome = editNome.getText().toString();
+        String genero = String.valueOf(radioGroupGeneros.getCheckedRadioButtonId());
+        String data = editData.getText().toString();
+        String prontuario = editProntuario.getText().toString();
+        String unidade = editUnidade.getSelectedItem().toString();
+
+        paciente = new Paciente(nome, toGeneroEnum(genero), toLocalDate(data), Integer.valueOf(prontuario), unidade);
+        PacientesDatabase database = PacientesDatabase.getDatabase(this);
+
+        if (modo == NOVO_PACIENTE){
+            database.pacienteDao().insert(paciente);
+        } else {
+            database.pacienteDao().update(paciente);
+        }
+
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     private Integer selecionarUnidade(String unidade) {
@@ -119,45 +164,19 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         return 0;
     }
 
-    public static void novoPaciente(AppCompatActivity activity) {
-        Intent intent = new Intent(activity, CadastrarPacienteActivity.class);
-        intent.putExtra(MODO, NOVO_PACIENTE);
-        activity.startActivityForResult(intent, NOVO_PACIENTE);
+    private GeneroEnum toGeneroEnum(String sexo) {
+        return sexo.equals(String.valueOf(R.id.buttonMasculino)) ? GeneroEnum.MASCULINO : GeneroEnum.FEMININO;
     }
 
-    public static void editarPaciente(AppCompatActivity activity, Paciente paciente) {
-        Intent intent = new Intent(activity, CadastrarPacienteActivity.class);
-        intent.putExtra(MODO, ALTERAR_PACIENTE);
-        intent.putExtra(KEY_NOME, paciente.getNome());
-        intent.putExtra(KEY_GENERO, paciente.getSexo().equals(GeneroEnum.MASCULINO) ? R.id.buttonMasculino : R.id.buttonFeminino);
+    private LocalDate toLocalDate(String data) {
+        DateTimeFormatter parser = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            intent.putExtra(KEY_DATA, paciente.getDataNascimento().toString());
+            parser = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         }
-        intent.putExtra(KEY_PRONTUARIO, paciente.getNumeroProntuario().toString());
-        intent.putExtra(KEY_UNIDADE, paciente.getUnidadeInternacao());
-        activity.startActivityForResult(intent, ALTERAR_PACIENTE);
-    }
-
-    private void displayDatePicker(){
-        editData.setOnClickListener(v -> {
-            int dia = calendario.get(Calendar.DAY_OF_MONTH);
-            int mes = calendario.get(Calendar.MONTH);
-            int ano = calendario.get(Calendar.YEAR);
-
-            DatePickerDialog dialog = new DatePickerDialog(
-                    CadastrarPacienteActivity.this,
-                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                    dateSetListener,
-                    dia, mes, ano);
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-        });
-        dateSetListener = (datePicker, year, month, day) -> {
-        month = month + 1;
-        String data = String.format(Locale.getDefault(),"%04d/%02d/%02d", year, month, day);
-        editData.setText(data);
-        };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return LocalDate.from(LocalDate.parse(data, parser));
+        }
+        return null;
     }
 
     public void limparCampos(){
@@ -175,35 +194,6 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
 
         editNome.requestFocus();
-    }
-
-    public void salvarPaciente() {
-        if(isCamposPreenchidos() && isBotoesSelecionados()){
-                cadastrarPaciente();
-        } else {
-            Toast.makeText(this,
-                    R.string.toast_erro_cadastro,
-                    Toast.LENGTH_SHORT).show();
-            editUnidade.requestFocus();
-        }
-    }
-
-    public void cadastrarPaciente() {
-        String nome = editNome.getText().toString();
-        String genero = String.valueOf(radioGroupGeneros.getCheckedRadioButtonId());
-        String data = editData.getText().toString();
-        String prontuario = editProntuario.getText().toString();
-        String unidade = editUnidade.getSelectedItem().toString();
-
-        Intent intent = new Intent();
-        intent.putExtra(KEY_NOME, nome);
-        intent.putExtra(KEY_GENERO, genero);
-        intent.putExtra(KEY_DATA, data);
-        intent.putExtra(KEY_PRONTUARIO, prontuario);
-        intent.putExtra(KEY_UNIDADE, unidade);
-
-        setResult(Activity.RESULT_OK, intent);
-        finish();
     }
 
     private boolean isCamposPreenchidos(){
@@ -227,6 +217,35 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private void displayDatePicker(){
+        editData.setOnClickListener(v -> {
+            int dia = calendario.get(Calendar.DAY_OF_MONTH);
+            int mes = calendario.get(Calendar.MONTH);
+            int ano = calendario.get(Calendar.YEAR);
+
+            DatePickerDialog dialog = new DatePickerDialog(
+                    CadastrarPacienteActivity.this,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    dateSetListener,
+                    dia, mes, ano);
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+        });
+        dateSetListener = (datePicker, year, month, day) -> {
+            month = month + 1;
+            String data = String.format(Locale.getDefault(),"%04d/%02d/%02d", year, month, day);
+            editData.setText(data);
+        };
+    }
+
+    private void configuraBottomUp() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

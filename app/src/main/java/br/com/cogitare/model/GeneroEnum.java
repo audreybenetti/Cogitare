@@ -1,4 +1,4 @@
-package br.com.cogitare;
+package br.com.cogitare.model;
 
 public enum GeneroEnum {
     MASCULINO,

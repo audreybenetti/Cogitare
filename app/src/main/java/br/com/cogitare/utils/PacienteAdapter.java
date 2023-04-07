@@ -1,4 +1,4 @@
-package br.com.cogitare;
+package br.com.cogitare.utils;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+import br.com.cogitare.R;
+import br.com.cogitare.model.Paciente;
 
 public class PacienteAdapter extends BaseAdapter {
 
@@ -24,6 +27,11 @@ public class PacienteAdapter extends BaseAdapter {
         public TextView textViewValorSexo;
         public TextView textViewValorProntuario;
         public TextView textViewValorUnidade;
+    }
+
+    public void remove(Paciente paciente) {
+        pacientes.remove(paciente);
+        notifyDataSetChanged();
     }
 
     @Override

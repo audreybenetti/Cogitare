@@ -1,26 +1,50 @@
-package br.com.cogitare;
+package br.com.cogitare.model;
+
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.time.LocalDate;
 
+@Entity
 public class Paciente {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    @NonNull
     private String nome;
     private GeneroEnum sexo;
     private LocalDate dataNascimento;
     private Integer numeroProntuario;
     private String unidadeInternacao;
 
-    public Paciente (String nome, Integer numeroProntuario, String unidadeInternacao){
-        setNome(nome);
-        setNumeroProntuario(numeroProntuario);
-        setUnidadeInternacao(unidadeInternacao);
+    public Paciente() {
+
     }
 
+    public Paciente(@NonNull String nome, GeneroEnum sexo, LocalDate dataNascimento, Integer numeroProntuario, String unidadeInternacao) {
+        this.nome = nome;
+        this.sexo = sexo;
+        this.dataNascimento = dataNascimento;
+        this.numeroProntuario = numeroProntuario;
+        this.unidadeInternacao = unidadeInternacao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @NonNull
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(@NonNull String nome) {
         this.nome = nome;
     }
 
