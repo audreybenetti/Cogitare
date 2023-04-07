@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.view.ActionMode;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -154,6 +155,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
                                     int resultCode,
                                     Intent intent) {
 
+        super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode == Activity.RESULT_OK) {
             Bundle bundle = intent.getExtras();
 
@@ -165,7 +167,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
 
             if (requestCode == CadastrarPacienteActivity.ALTERAR_PACIENTE) {
                 alterarPaciente(nome, sexo, data, prontuario, unidade);
-            } else if (requestCode == CadastrarPacienteActivity.NOVO_PACIENTE){
+            } else if (requestCode == CadastrarPacienteActivity.NOVO_PACIENTE) {
                 criarPaciente(nome, sexo, data, prontuario, unidade);
             }
             pacienteAdapter.notifyDataSetChanged();
