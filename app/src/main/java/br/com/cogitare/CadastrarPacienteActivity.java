@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -20,20 +19,18 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Locale;
+import java.util.Date;
 
+import br.com.cogitare.model.GeneroEnum;
 import br.com.cogitare.model.Paciente;
 import br.com.cogitare.persistence.PacientesDatabase;
-import br.com.cogitare.model.GeneroEnum;
 import br.com.cogitare.utils.UtilsDate;
 
 public class CadastrarPacienteActivity extends AppCompatActivity {
 
     private RadioGroup radioGroupGeneros;
-    final Calendar calendario = Calendar.getInstance();
+    private Calendar calendario;
     private EditText editNome, editData, editProntuario;
     private CheckBox editTermos;
     private Spinner editUnidade;
@@ -104,6 +101,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         if (bundle != null) {
             modo = bundle.getInt(MODO, NOVO_PACIENTE);
             if (modo == NOVO_PACIENTE) {
+                paciente = new Paciente();
                 setTitle(getString(R.string.titulo_cadastro));
             } else {
                 setTitle(getString(R.string.titulo_alteracao));
@@ -118,6 +116,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
 
         editNome.setText(paciente.getNome());
         editProntuario.setText(paciente.getNumeroProntuario().toString());
+        calendario.setTime(paciente.getDataNascimento());
         editData.setText(UtilsDate.formatDate(CadastrarPacienteActivity.this, paciente.getDataNascimento()));
         radioGroupGeneros.check(paciente.getSexo() == GeneroEnum.MASCULINO ? R.id.buttonMasculino : R.id.buttonFeminino);
         editUnidade.setSelection(selecionarUnidade(paciente.getUnidadeInternacao()));
@@ -137,12 +136,17 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
     public void salvarPaciente() {
         String nome = editNome.getText().toString();
         String genero = String.valueOf(radioGroupGeneros.getCheckedRadioButtonId());
+        Date dataNascimento = calendario.getTime();
         String prontuario = editProntuario.getText().toString();
         String unidade = editUnidade.getSelectedItem().toString();
 
-        paciente = new Paciente(nome, toGeneroEnum(genero), calendario.getTime(), Integer.valueOf(prontuario), unidade);
-        PacientesDatabase database = PacientesDatabase.getDatabase(this);
+        paciente.setNome(nome);
+        paciente.setSexo(toGeneroEnum(genero));
+        paciente.setDataNascimento(dataNascimento);
+        paciente.setNumeroProntuario(Integer.valueOf(prontuario));
+        paciente.setUnidadeInternacao(unidade);
 
+        PacientesDatabase database = PacientesDatabase.getDatabase(this);
         if (modo == NOVO_PACIENTE){
             database.pacienteDao().insert(paciente);
         } else {
@@ -204,11 +208,13 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         } else if (editUnidade.getSelectedItemId() == 0){
             editUnidade.requestFocus();
             return false;
-        }
-        return true;
+        } else if (calendario.getTime().after(Calendar.getInstance().getTime())){
+            return false;
+        } else return true;
     }
 
     private void displayDatePicker(){
+        calendario = Calendar.getInstance();
         editData.setOnClickListener(v -> {
             int day = calendario.get(Calendar.DAY_OF_MONTH);
             int month = calendario.get(Calendar.MONTH);
@@ -225,7 +231,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         });
         dateSetListener = (datePicker, year, month, day) -> {
             calendario.set(year, month, day);
-            String data = UtilsDate.formatDate(this, Calendar.getInstance().getTime());
+            String data = UtilsDate.formatDate(this, calendario.getTime());
             editData.setText(data);
         };
     }

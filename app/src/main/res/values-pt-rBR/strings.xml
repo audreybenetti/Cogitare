@@ -14,7 +14,7 @@
     <string name="sexo_feminino">Feminino</string>
     <string name="limpar_campos">Limpar campos</string>
     <string name="toast_limpar_campos">Campos limpos com sucesso!</string>
-    <string name="toast_erro_cadastro">Verifique o preenchimento dos campos.</string>
+    <string name="toast_erro_cadastro">Verifique se os campos estão preenchidos corretamente.</string>
     <string name="termos_privacidade">Ao cadastrar paciente, você deve concordar com os termos de privacidade.</string>
     <string name="int_geral">Internação Geral</string>
     <string name="int_pediatrica">Internação Pediátrica</string>

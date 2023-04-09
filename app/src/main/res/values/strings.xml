@@ -15,7 +15,7 @@
     <string name="sexo_feminino">Female</string>
     <string name="limpar_campos">Clear fields</string>
     <string name="toast_limpar_campos">Successfully cleared fields!</string>
-    <string name="toast_erro_cadastro">There are unfilled fields.</string>
+    <string name="toast_erro_cadastro">Make sure the fields are filled in correctly.</string>
     <string name="termos_privacidade">When registering a patient, you must agree to the privacy terms.</string>
     <string name="int_geral">General Hospitalization</string>
     <string name="int_pediatrica">Pediatric Hospitalization</string>
