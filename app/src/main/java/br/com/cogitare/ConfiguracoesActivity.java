@@ -1,8 +1,10 @@
 package br.com.cogitare;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.SwitchCompat;
@@ -40,6 +42,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             recreate();
         });
 
+        configuraBottomUp();
         loadDarkMode();
     }
 
@@ -56,6 +59,19 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     public static void mostrarConfiguracoes(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ConfiguracoesActivity.class);
         activity.startActivity(intent);
+    }
+
+    private void configuraBottomUp() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
 }
