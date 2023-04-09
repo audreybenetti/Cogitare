@@ -42,5 +42,9 @@
     <string name="settings">Settings</string>
     <string name="enable_dark_mode">Enable dark mode:</string>
     <string name="appearance">Appearance</string>
+    <string name="confirmacao_deletar_paciente">You really want to delete the patient %s? This action cannot be undone.</string>
+    <string name="confirma_acao">Confirmation</string>
+    <string name="sim">YES</string>
+    <string name="nao">NO</string>
 
 </resources>

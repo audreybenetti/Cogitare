@@ -38,4 +38,11 @@
     <string name="descricao_app">Descrição do aplicativo.</string>
     <string name="especializacao_java">Especialização Java</string>
     <string name="dark_mode">Modo noturno</string>
+    <string name="settings">Configurações</string>
+    <string name="enable_dark_mode">Ativar modo noturno:</string>
+    <string name="appearance">Aparência</string>
+    <string name="confirmacao_deletar_paciente">Você realmente deseja deletar o paciente %? Essa ação não pode ser desfeita.</string>
+    <string name="confirma_acao">Confirmação</string>
+    <string name="sim">SIM</string>
+    <string name="nao">NÃO</string>
 </resources>

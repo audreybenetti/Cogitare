@@ -1,6 +1,7 @@
 package br.com.cogitare;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import java.util.List;
 import br.com.cogitare.model.Paciente;
 import br.com.cogitare.persistence.PacientesDatabase;
 import br.com.cogitare.utils.PacienteAdapter;
+import br.com.cogitare.utils.UtilsGUI;
 
 public class ListarPacientesActivity extends AppCompatActivity {
 
@@ -119,9 +121,25 @@ public class ListarPacientesActivity extends AppCompatActivity {
     }
 
     private void excluirPaciente(Paciente paciente){
-        PacientesDatabase database = PacientesDatabase.getDatabase(this);
-        database.pacienteDao().delete(paciente);
-        pacienteAdapter.remove(paciente);
+        String mensagem = String.format(getString(R.string.confirmacao_deletar_paciente), paciente.getNome());
+
+        DialogInterface.OnClickListener listener =
+                (dialog, which) -> {
+
+                    switch(which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            PacientesDatabase database = PacientesDatabase.getDatabase(ListarPacientesActivity.this);
+                            database.pacienteDao().delete(paciente);
+                            pacienteAdapter.remove(paciente);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                };
+
+        UtilsGUI.confirmaAcao(this, mensagem, listener);
+
     }
 
     public void popularLista() {
