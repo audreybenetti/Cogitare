@@ -1,11 +1,8 @@
 package br.com.cogitare.utils;
 
 import android.arch.persistence.room.TypeConverter;
-import android.os.Build;
 
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 import br.com.cogitare.model.GeneroEnum;
@@ -13,24 +10,13 @@ import br.com.cogitare.model.GeneroEnum;
 public class RoomTypeConverters {
 
     @TypeConverter
-    public static LocalDate fromString(String value) {
-        return value == null ? null : toLocalDate(value);
+    public static Date fromTimestamp(Long value) {
+        return value == null ? null : new Date(value);
     }
 
     @TypeConverter
-    public static String dataToString(LocalDate date) {
-        return date == null ? null : date.toString();
-    }
-
-    private static LocalDate toLocalDate(String data) {
-        DateTimeFormatter parser = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            parser = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return LocalDate.from(LocalDate.parse(data, parser));
-        }
-        return null;
+    public static Long dateToTimestamp(Date date) {
+        return date == null ? null : date.getTime();
     }
 
     @TypeConverter

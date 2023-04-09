@@ -28,6 +28,7 @@ import java.util.Locale;
 import br.com.cogitare.model.Paciente;
 import br.com.cogitare.persistence.PacientesDatabase;
 import br.com.cogitare.model.GeneroEnum;
+import br.com.cogitare.utils.UtilsDate;
 
 public class CadastrarPacienteActivity extends AppCompatActivity {
 
@@ -117,7 +118,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
 
         editNome.setText(paciente.getNome());
         editProntuario.setText(paciente.getNumeroProntuario().toString());
-        editData.setText(paciente.getDataNascimento().toString());
+        editData.setText(UtilsDate.formatDate(CadastrarPacienteActivity.this, paciente.getDataNascimento()));
         radioGroupGeneros.check(paciente.getSexo() == GeneroEnum.MASCULINO ? R.id.buttonMasculino : R.id.buttonFeminino);
         editUnidade.setSelection(selecionarUnidade(paciente.getUnidadeInternacao()));
     }
@@ -136,11 +137,10 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
     public void salvarPaciente() {
         String nome = editNome.getText().toString();
         String genero = String.valueOf(radioGroupGeneros.getCheckedRadioButtonId());
-        String data = editData.getText().toString();
         String prontuario = editProntuario.getText().toString();
         String unidade = editUnidade.getSelectedItem().toString();
 
-        paciente = new Paciente(nome, toGeneroEnum(genero), toLocalDate(data), Integer.valueOf(prontuario), unidade);
+        paciente = new Paciente(nome, toGeneroEnum(genero), calendario.getTime(), Integer.valueOf(prontuario), unidade);
         PacientesDatabase database = PacientesDatabase.getDatabase(this);
 
         if (modo == NOVO_PACIENTE){
@@ -166,17 +166,6 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
 
     private GeneroEnum toGeneroEnum(String sexo) {
         return sexo.equals(String.valueOf(R.id.buttonMasculino)) ? GeneroEnum.MASCULINO : GeneroEnum.FEMININO;
-    }
-
-    private LocalDate toLocalDate(String data) {
-        DateTimeFormatter parser = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            parser = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return LocalDate.from(LocalDate.parse(data, parser));
-        }
-        return null;
     }
 
     public void limparCampos(){
@@ -221,22 +210,22 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
 
     private void displayDatePicker(){
         editData.setOnClickListener(v -> {
-            int dia = calendario.get(Calendar.DAY_OF_MONTH);
-            int mes = calendario.get(Calendar.MONTH);
-            int ano = calendario.get(Calendar.YEAR);
+            int day = calendario.get(Calendar.DAY_OF_MONTH);
+            int month = calendario.get(Calendar.MONTH);
+            int year = calendario.get(Calendar.YEAR);
 
-            DatePickerDialog dialog = new DatePickerDialog(
+            DatePickerDialog datePicker = new DatePickerDialog(
                     CadastrarPacienteActivity.this,
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     dateSetListener,
-                    dia, mes, ano);
+                    year, month, day);
 
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
+            datePicker.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePicker.show();
         });
         dateSetListener = (datePicker, year, month, day) -> {
-            month = month + 1;
-            String data = String.format(Locale.getDefault(),"%04d/%02d/%02d", year, month, day);
+            calendario.set(year, month, day);
+            String data = UtilsDate.formatDate(this, Calendar.getInstance().getTime());
             editData.setText(data);
         };
     }

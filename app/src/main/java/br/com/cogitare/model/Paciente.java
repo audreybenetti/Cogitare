@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Paciente {
@@ -15,7 +15,7 @@ public class Paciente {
     @NonNull
     private String nome;
     private GeneroEnum sexo;
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
     private Integer numeroProntuario;
     private String unidadeInternacao;
 
@@ -23,7 +23,7 @@ public class Paciente {
 
     }
 
-    public Paciente(@NonNull String nome, GeneroEnum sexo, LocalDate dataNascimento, Integer numeroProntuario, String unidadeInternacao) {
+    public Paciente(@NonNull String nome, GeneroEnum sexo, Date dataNascimento, Integer numeroProntuario, String unidadeInternacao) {
         this.nome = nome;
         this.sexo = sexo;
         this.dataNascimento = dataNascimento;
@@ -56,11 +56,11 @@ public class Paciente {
         this.sexo = sexo;
     }
 
-    public LocalDate getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
