@@ -101,7 +101,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            int modo = bundle.getInt(MODO, NOVO_PACIENTE);
+            modo = bundle.getInt(MODO, NOVO_PACIENTE);
             if (modo == NOVO_PACIENTE) {
                 setTitle(getString(R.string.titulo_cadastro));
             } else {
@@ -171,7 +171,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
     private LocalDate toLocalDate(String data) {
         DateTimeFormatter parser = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            parser = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            parser = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             return LocalDate.from(LocalDate.parse(data, parser));
