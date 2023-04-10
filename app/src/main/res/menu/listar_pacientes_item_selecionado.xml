@@ -9,4 +9,8 @@
         android:id="@+id/menuItemExcluir"
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/excluir" />
+    <item
+        android:id="@+id/menuItemRegistro"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/adicionar_registro" />
 </menu>

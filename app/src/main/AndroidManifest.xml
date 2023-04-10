@@ -15,6 +15,9 @@
             android:name=".ConfiguracoesActivity"
             android:exported="false" />
         <activity
+            android:name=".AdicionarRegistroActivity"
+            android:exported="false" />
+        <activity
             android:name=".CadastrarPacienteActivity"
             android:exported="false"
             android:parentActivityName=".ListarPacientesActivity"/>

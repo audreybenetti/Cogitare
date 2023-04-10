@@ -46,5 +46,7 @@
     <string name="confirma_acao">Confirmation</string>
     <string name="sim">YES</string>
     <string name="nao">NO</string>
+    <string name="registros_paciente">Patient records</string>
+    <string name="adicionar_registro">Add record</string>
 
 </resources>

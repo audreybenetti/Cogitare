@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    style="@style/SCREEN"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CadastrarPacienteActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_cadastro"
+        style="@style/SCREEN"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            style="@style/SCREEN"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:clickable="false"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:saveEnabled="false">
+
+            <TextView
+                android:id="@+id/view_nome"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/nome_completo"
+                app:layout_constraintBottom_toTopOf="@+id/edit_nome"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edit_nome"
+                style="@style/TEXT"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:enabled="false"
+                android:focusable="false"
+                app:layout_constraintBottom_toTopOf="@+id/view_sexo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_nome" />
+
+            <TextView
+                android:id="@+id/view_sexo"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/sexo_paciente"
+                app:layout_constraintBottom_toTopOf="@+id/groupGeneros"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_nome" />
+
+            <TextView
+                android:id="@+id/view_data_nascimento"
+                style="@style/TEXT"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/data_de_nascimento"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/groupGeneros" />
+
+            <TextView
+                android:id="@+id/view_prontuario"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/numero_prontuario"
+                app:layout_constraintBottom_toTopOf="@+id/edit_prontuario"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_data" />
+
+            <EditText
+                android:id="@+id/edit_prontuario"
+                style="@style/TEXT"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:ems="10"
+                android:enabled="false"
+                android:focusable="false"
+                app:layout_constraintBottom_toTopOf="@+id/view_unidade_internacao"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/view_unidade_internacao"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:prompt="@string/title_unidade_internacao"
+                android:text="@string/unidade_internacao"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_prontuario" />
+
+            <EditText
+                android:id="@+id/edit_unidade_internacao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:ems="10"
+                android:enabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_unidade_internacao" />
+
+            <RadioGroup
+                android:id="@+id/groupGeneros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/view_data_nascimento"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_sexo">
+
+                <RadioButton
+                    android:id="@+id/buttonMasculino"
+                    style="@style/TEXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:text="@string/sexo_masculino" />
+
+                <RadioButton
+                    android:id="@+id/buttonFeminino"
+                    style="@style/TEXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:text="@string/sexo_feminino" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/edit_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="8dp"
+                android:cursorVisible="true"
+                android:ems="10"
+                android:enabled="false"
+                android:focusable="false"
+                app:layout_constraintBottom_toTopOf="@+id/view_prontuario"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_data_nascimento" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        style="@style/SCREEN"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_cadastro">
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+            style="@style/SCREEN"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/view_relatorios"
+                style="@style/TEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/registros_paciente" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/adicionar_registro" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

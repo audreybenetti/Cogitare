@@ -88,6 +88,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
                 return true;
             case R.id.menuItemConfiguracoes:
                 ConfiguracoesActivity.mostrarConfiguracoes(this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -114,6 +115,10 @@ public class ListarPacientesActivity extends AppCompatActivity {
                 return true;
             case R.id.menuItemExcluir:
                 excluirPaciente(paciente);
+                return true;
+            case R.id.menuItemRegistro:
+                AdicionarRegistroActivity.adicionarRegistro(this,
+                        paciente);
                 return true;
             default:
                 return super.onContextItemSelected(item);

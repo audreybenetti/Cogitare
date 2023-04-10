@@ -54,6 +54,7 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         editTermos = findViewById(R.id.check_termos);
         editData = findViewById(R.id.edit_data);
 
+
         displayDatePicker();
         configuraBottomUp();
         definePagina();
