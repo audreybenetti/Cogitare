@@ -12,5 +12,5 @@
     <item
         android:id="@+id/menuItemRegistro"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/adicionar_registro" />
+        android:title="@string/open_patient" />
 </menu>

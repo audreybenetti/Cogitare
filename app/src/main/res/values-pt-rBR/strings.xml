@@ -47,4 +47,5 @@
     <string name="nao">NÃO</string>
     <string name="registros_paciente">Relatórios</string>
     <string name="adicionar_registro">Adicionar relatório</string>
+    <string name="open_patient">Abrir paciente</string>
 </resources>

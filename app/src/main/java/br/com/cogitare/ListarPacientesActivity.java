@@ -47,7 +47,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
 
         listViewPacientes.setOnItemClickListener((parent, view, position, id) -> {
             Paciente pacientes = (Paciente) parent.getItemAtPosition(position);
-            CadastrarPacienteActivity.editarPaciente(ListarPacientesActivity.this,
+            VerPacienteActivity.verPaciente(ListarPacientesActivity.this,
                     pacientes);
         });
 
@@ -117,7 +117,7 @@ public class ListarPacientesActivity extends AppCompatActivity {
                 excluirPaciente(paciente);
                 return true;
             case R.id.menuItemRegistro:
-                AdicionarRegistroActivity.adicionarRegistro(this,
+                VerPacienteActivity.verPaciente(this,
                         paciente);
                 return true;
             default:
