@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.SwitchCompat;
+import android.view.MenuItem;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 
@@ -60,6 +61,15 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         Intent intent = new Intent(activity, ConfiguracoesActivity.class);
         activity.startActivity(intent);
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void configuraBottomUp() {
         ActionBar actionBar = getSupportActionBar();

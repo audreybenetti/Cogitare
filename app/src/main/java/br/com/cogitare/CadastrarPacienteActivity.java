@@ -138,13 +138,13 @@ public class CadastrarPacienteActivity extends AppCompatActivity {
         String nome = editNome.getText().toString();
         String genero = String.valueOf(radioGroupGeneros.getCheckedRadioButtonId());
         Date dataNascimento = calendario.getTime();
-        String prontuario = editProntuario.getText().toString();
+        Integer prontuario = Integer.valueOf(editProntuario.getText().toString());
         String unidade = editUnidade.getSelectedItem().toString();
 
         paciente.setNome(nome);
         paciente.setSexo(toGeneroEnum(genero));
         paciente.setDataNascimento(dataNascimento);
-        paciente.setNumeroProntuario(Integer.valueOf(prontuario));
+        paciente.setNumeroProntuario(prontuario);
         paciente.setUnidadeInternacao(unidade);
 
         PacientesDatabase database = PacientesDatabase.getDatabase(this);

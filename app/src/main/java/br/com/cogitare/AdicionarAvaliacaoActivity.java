@@ -2,21 +2,27 @@ package br.com.cogitare;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import br.com.cogitare.model.Avaliacao;
 import br.com.cogitare.model.RitmoCardiacoEnum;
+import br.com.cogitare.persistence.PacientesDatabase;
 
 public class AdicionarAvaliacaoActivity extends AppCompatActivity {
 
     private EditText editAusculta;
     private Spinner spinnerRitmoCardiaco;
-    private Avaliacao avaliacao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,21 +36,7 @@ public class AdicionarAvaliacaoActivity extends AppCompatActivity {
         spinnerRitmoCardiaco.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, RitmoCardiacoEnum.values()));
 
-        avaliacao = new Avaliacao();
-    }
-
-
-
-    public void salvarAvaliacao() {
-
-        String ausculta = editAusculta.getText().toString();
-        String ritmoCardiaco = spinnerRitmoCardiaco.getSelectedItem().toString();
-
-        avaliacao = new Avaliacao(toRitmoEnum(ritmoCardiaco), Integer.valueOf(ausculta));
-//        database.pacienteDao().insert(paciente);
-
-        setResult(Activity.RESULT_OK);
-        finish();
+        configuraBottomUp();
     }
 
     public static void adicionarAvaliacao(Activity activity){
@@ -52,8 +44,25 @@ public class AdicionarAvaliacaoActivity extends AppCompatActivity {
         activity.startActivity(intent);
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-    private RitmoCardiacoEnum toRitmoEnum(String ritmoCardiaco){
-        return ritmoCardiaco.equals(RitmoCardiacoEnum.IRREGULAR.toString()) ? RitmoCardiacoEnum.IRREGULAR : RitmoCardiacoEnum.REGULAR;
+
+    private void configuraBottomUp() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 }

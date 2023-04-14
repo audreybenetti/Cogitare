@@ -49,5 +49,6 @@
     <string name="registros_paciente">Patient records</string>
     <string name="adicionar_registro">Add record</string>
     <string name="open_patient">Open patient</string>
+    <string name="aviso_a_implementar">Implement: Space destined to the listView of the attendance reports registered in the patient\'s ID.</string>
 
 </resources>

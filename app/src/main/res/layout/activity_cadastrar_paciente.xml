@@ -21,6 +21,7 @@
 
     <TextView
         android:id="@+id/view_nome"
+        style="@style/TEXT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,25 +29,21 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:text="@string/nome_completo"
-        style="@style/TEXT"
         app:layout_constraintBottom_toTopOf="@+id/edit_nome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edit_nome"
+        style="@style/TEXT"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:inputType="textCapWords|textCapSentences"
-        style="@style/TEXT"
-
         app:layout_constraintBottom_toTopOf="@+id/view_sexo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,15 +51,13 @@
 
     <TextView
         android:id="@+id/view_sexo"
+        style="@style/TEXT"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:text="@string/sexo_paciente"
-        style="@style/TEXT"
-        app:layout_constraintBottom_toTopOf="@+id/groupGeneros"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_nome" />
 
@@ -80,17 +75,15 @@
 
     <TextView
         android:id="@+id/view_prontuario"
+        style="@style/TEXT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/numero_prontuario"
-        style="@style/TEXT"
         app:layout_constraintBottom_toTopOf="@+id/edit_prontuario"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_data" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edit_prontuario"

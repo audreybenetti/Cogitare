@@ -48,4 +48,5 @@
     <string name="registros_paciente">Relatórios</string>
     <string name="adicionar_registro">Adicionar relatório</string>
     <string name="open_patient">Abrir paciente</string>
+    <string name="aviso_a_implementar">Implementar: Espaço destinado ao listView dos relatórios de atendimento cadastrados no ID do paciente.</string>
 </resources>

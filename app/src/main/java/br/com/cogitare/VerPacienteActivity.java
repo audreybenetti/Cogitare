@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioGroup;
+
+import java.util.List;
 
 import br.com.cogitare.model.GeneroEnum;
 import br.com.cogitare.model.Paciente;
@@ -22,6 +26,7 @@ public class VerPacienteActivity extends AppCompatActivity{
     private RadioGroup radioGroupGeneros;
     private EditText editNome, editData, editProntuario, editUnidade;
     private Button buttonPaciente, buttonRegistro;
+    private Integer idPaciente;
     private Paciente paciente;
 
     @Override
@@ -40,8 +45,8 @@ public class VerPacienteActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
-        insereDadosPaciente(bundle.getInt(ID));
+        idPaciente = bundle.getInt(ID);
+        insereDadosPaciente(idPaciente);
         configuraBottomUp();
     }
 
@@ -66,8 +71,27 @@ public class VerPacienteActivity extends AppCompatActivity{
         CadastrarPacienteActivity.editarPaciente(VerPacienteActivity.this, paciente);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode,
+                                    int resultCode,
+                                    Intent intent) {
+
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode == Activity.RESULT_OK){
+            insereDadosPaciente(idPaciente);
+        }
+    }
+
     public void adicionarAvaliacao(View view){
         AdicionarAvaliacaoActivity.adicionarAvaliacao(VerPacienteActivity.this);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void configuraBottomUp() {
